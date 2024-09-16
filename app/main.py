@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable
 from functools import wraps
 
 
@@ -8,7 +8,6 @@ def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args: Callable) -> Callable:
         result = func(*args)
-        # Преобразуем результат в кортеж, чтобы избежать ошибки "unhashable type"
         result_tuple = tuple(result) if isinstance(result, list) else result
         if result_tuple in catcher:
             print("Getting from cache")
