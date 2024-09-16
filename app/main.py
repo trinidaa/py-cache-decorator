@@ -1,4 +1,4 @@
-from typing import Callable, List, Any
+from typing import Callable, Any
 from functools import wraps
 
 
@@ -8,9 +8,10 @@ def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args: Callable) -> Callable:
         result = func(*args)
+        # Преобразуем результат в кортеж, чтобы избежать ошибки "unhashable type"
         result_tuple = tuple(result) if isinstance(result, list) else result
         if result_tuple in catcher:
-            print(f"Symbol(s) > {result_tuple} < detect duplicate. Stopping cache! ")
+            print(f"Symbol(s) > {result_tuple} < detect duplicate. Stopping cache!")
             return result
         else:
             catcher.add(result_tuple)
