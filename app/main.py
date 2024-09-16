@@ -16,5 +16,4 @@ def cache(func: Callable) -> Callable:
             catcher.add(result_tuple)
             print("Calculating new result")
             return result
-
     return wrapper
