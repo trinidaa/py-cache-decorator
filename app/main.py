@@ -7,12 +7,12 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def wrapper(*args: Callable) -> Callable:
-        result = func(*args)
         if args in catcher:
             print("Getting from cache")
             return catcher[args]
         else:
-            catcher[args] = result
             print("Calculating new result")
+            result = func(*args)
+            catcher[args] = result
             return result
     return wrapper
