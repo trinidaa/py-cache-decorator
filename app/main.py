@@ -3,17 +3,16 @@ from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    catcher = set()
+    catcher = {}
 
     @wraps(func)
     def wrapper(*args: Callable) -> Callable:
         result = func(*args)
-        result_tuple = tuple(result) if isinstance(result, list) else result
-        if result_tuple in catcher:
+        if args in catcher:
             print("Getting from cache")
-            return result
+            return catcher[args]
         else:
-            catcher.add(result_tuple)
+            catcher[args] = result
             print("Calculating new result")
             return result
     return wrapper
